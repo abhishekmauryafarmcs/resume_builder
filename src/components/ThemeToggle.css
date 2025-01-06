@@ -1,0 +1,36 @@
+.theme-toggle {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.theme-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.theme-toggle svg {
+  width: 24px;
+  height: 24px;
+  color: #2c3e50;
+}
+
+[data-theme="dark"] .theme-toggle svg {
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .theme-toggle {
+    position: static;
+    transform: none;
+  }
+} 

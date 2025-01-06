@@ -1,0 +1,292 @@
+.resume-form {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  height: calc(100vh - 100px);
+  overflow-y: auto;
+  position: sticky;
+  top: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Keep form background light in dark mode */
+[data-theme="dark"] .resume-form {
+  background: #ffffff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Keep form sections light in dark mode */
+[data-theme="dark"] .form-section {
+  background: #ffffff;
+  border: 1px solid #eee;
+}
+
+/* Keep form groups (education, experience, etc.) light in dark mode */
+[data-theme="dark"] .form-group {
+  background: white;
+  border: 1px solid #eee;
+}
+
+/* Keep text color dark for better readability */
+[data-theme="dark"] .form-section h2,
+[data-theme="dark"] .resume-form label,
+[data-theme="dark"] .resume-form input,
+[data-theme="dark"] .resume-form textarea {
+  color: #2c3e50;
+}
+
+/* Keep input styles consistent */
+[data-theme="dark"] .resume-form input,
+[data-theme="dark"] .resume-form textarea {
+  background: #ffffff;
+  color: #2c3e50;
+  border: 1px solid #ddd;
+}
+
+/* Keep button styles consistent but slightly adjusted for dark mode */
+[data-theme="dark"] .resume-form button:not(.remove-btn) {
+  background: #007bff;
+  color: white;
+  border: none;
+}
+
+[data-theme="dark"] .resume-form button:not(.remove-btn):hover {
+  background: #0056b3;
+}
+
+/* Keep remove button styles */
+[data-theme="dark"] .remove-btn {
+  background: #dc3545 !important;
+  color: white !important;
+}
+
+[data-theme="dark"] .remove-btn:hover {
+  background: #c82333 !important;
+}
+
+/* Keep scrollbar styles light */
+[data-theme="dark"] .resume-form::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+[data-theme="dark"] .resume-form::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+[data-theme="dark"] .resume-form::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Keep section titles consistent */
+[data-theme="dark"] .section-title {
+  color: #2c3e50;
+  border-bottom-color: #ddd;
+}
+
+/* Add subtle shadow to form sections in dark mode */
+[data-theme="dark"] .form-section {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Keep date inputs consistent */
+[data-theme="dark"] .date-inputs input {
+  background: white;
+  color: #2c3e50;
+}
+
+/* Keep preview button styles */
+[data-theme="dark"] .preview-button {
+  background: #28a745;
+}
+
+[data-theme="dark"] .preview-button:hover {
+  background: #218838;
+}
+
+.resume-form::-webkit-scrollbar {
+  width: 8px;
+}
+
+.resume-form::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.resume-form::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.resume-form::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.form-section {
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  border: 1px solid #eee;
+}
+
+.form-section h2 {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #2c3e50;
+}
+
+button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+.form-group {
+  background: white;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-section button {
+  margin-bottom: 15px;
+}
+
+.date-inputs {
+  display: flex;
+  gap: 10px;
+}
+
+.date-inputs input {
+  flex: 1;
+}
+
+.remove-btn {
+  background: #dc3545 !important;
+  color: white !important;
+  margin-top: 10px;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.remove-btn:hover {
+  background: #c82333 !important;
+}
+
+.preview-button-container {
+  text-align: center;
+  padding: 20px 0;
+  margin-top: 20px;
+  border-top: 1px solid #ddd;
+}
+
+.preview-button {
+  background: #28a745;
+  color: white;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.preview-button:hover {
+  background: #218838;
+}
+
+.preview-button::before {
+  content: "👁️";
+  font-size: 1.2rem;
+}
+
+.input-wrapper {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.spell-error-indicator {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #f39c12;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: rgba(243, 156, 18, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+/* Style for misspelled words */
+input::-webkit-spelling-error,
+textarea::-webkit-spelling-error {
+  text-decoration: wavy underline #f39c12;
+}
+
+input::-moz-spelling-error,
+textarea::-moz-spelling-error {
+  text-decoration: wavy underline #f39c12;
+}
+
+/* Add some padding to inputs to prevent overlap with indicator */
+.input-wrapper input,
+.input-wrapper textarea {
+  padding-right: 140px;
+}
+
+/* Style for correct spelling */
+input:not(::-webkit-spelling-error),
+textarea:not(::-webkit-spelling-error) {
+  background-color: transparent;
+}
+
+/* Add a subtle transition for the indicator */
+.spell-error-indicator {
+  transition: opacity 0.2s ease;
+  opacity: 0;
+}
+
+.spell-error-indicator:not(:empty) {
+  opacity: 1;
+}
+
+/* Remove any conflicting styles */
+[data-theme="dark"] .resume-form button.remove-btn {
+  background: #dc3545 !important;
+  color: white !important;
+}
+
+[data-theme="dark"] .resume-form button.remove-btn:hover {
+  background: #c82333 !important;
+} 

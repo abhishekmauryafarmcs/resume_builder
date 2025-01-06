@@ -1,0 +1,298 @@
+/* Light mode (default) styles */
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  transition: background-color 0.3s ease;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 30px;
+  flex-shrink: 0;
+  position: relative;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 20px;
+}
+
+.app-header h1 {
+  margin: 0;
+  color: #2c3e50;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  transition: color 0.3s ease;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+/* Add animation keyframes */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hindi-text {
+  color: #3498db;
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  display: inline-block;
+  font-size: 1.8rem;
+  vertical-align: baseline;
+  margin-left: 5px;
+  opacity: 0; /* Start hidden */
+  animation: fadeIn 1s ease-out forwards;
+  animation-delay: 1.5s; /* Wait 1.5s before starting animation */
+}
+
+/* Dark mode styles */
+[data-theme="dark"] {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .app {
+  background-color: #1a1a1a;
+}
+
+[data-theme="dark"] .app-header {
+  border-bottom-color: #333;
+}
+
+[data-theme="dark"] .app-header h1 {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .app-footer {
+  border-top-color: #333;
+}
+
+[data-theme="dark"] .linkedin-link {
+  color: #64b5f6;
+}
+
+[data-theme="dark"] .linkedin-link:hover {
+  background-color: rgba(100, 181, 246, 0.1);
+}
+
+/* Preserve existing styles */
+.app-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.app-footer {
+  text-align: center;
+  padding: 30px 0;
+  margin-top: 30px;
+  border-top: 2px solid #eee;
+  flex-shrink: 0;
+}
+
+.export-button {
+  background: #2b579a;
+  color: white;
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.export-button:hover {
+  background: #1e3f7a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.export-button::before {
+  content: "📄";
+  font-size: 1.3rem;
+}
+
+@media (max-width: 768px) {
+  .app-main {
+    grid-template-columns: 1fr;
+  }
+  
+  .export-button {
+    width: 100%;
+    justify-content: center;
+  }
+} 
+
+.linkedin-link {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #0077b5;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.linkedin-link:hover {
+  background-color: rgba(0, 119, 181, 0.1);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.linkedin-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.linkedin-link span {
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .app-main {
+    grid-template-columns: 1fr;
+  }
+  
+  .export-button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .linkedin-link {
+    position: static;
+    transform: none;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+  
+  .linkedin-link:hover {
+    transform: scale(1.05);
+  }
+} 
+
+[data-theme="dark"] {
+  background-color: #1a1a1a;
+}
+
+[data-theme="dark"] .app {
+  background-color: #1a1a1a;
+}
+
+[data-theme="dark"] .app-header h1 {
+  color: #fff;
+}
+
+[data-theme="dark"] .app-header {
+  border-color: #333;
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .app-main {
+  background: none;
+} 
+
+/* Add these styles */
+.section-title {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #eee;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Dark mode styles for section titles */
+[data-theme="dark"] .section-title {
+  color: #2c3e50 !important; /* Force black color in dark mode */
+  border-bottom-color: #444;
+}
+
+/* Make sure form labels stay visible in dark mode */
+[data-theme="dark"] .resume-form label {
+  color: #2c3e50 !important;
+}
+
+[data-theme="dark"] .form-section {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+[data-theme="dark"] .resume-form input,
+[data-theme="dark"] .resume-form textarea,
+[data-theme="dark"] .resume-form select {
+  background-color: white;
+  color: #2c3e50;
+  border: 1px solid #ddd;
+}
+
+[data-theme="dark"] .resume-form button {
+  background-color: #2b579a;
+  color: white;
+}
+
+[data-theme="dark"] .resume-form button:hover {
+  background-color: #1e3f7a;
+} 
+
+/* Ensure proper alignment in dark mode */
+[data-theme="dark"] .app-header h1 {
+  color: #ffffff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .app-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .hindi-text {
+    font-size: 1.6rem;
+  }
+} 
+
+.copyright-footer {
+  text-align: center;
+  padding: 15px 0;
+  font-size: 0.9rem;
+  color: #666;
+  border-top: 1px solid #eee;
+  margin-top: 20px;
+}
+
+[data-theme="dark"] .copyright-footer {
+  color: #888;
+  border-top-color: #333;
+}
+
+@media (max-width: 768px) {
+  .copyright-footer {
+    padding: 12px 0;
+    font-size: 0.85rem;
+  }
+} 
