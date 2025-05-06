@@ -4,16 +4,11 @@ import './App.css';
 import ResumeForm from './components/ResumeForm';
 import ResumePreview from './components/ResumePreview';
 import FullPagePreview from './components/FullPagePreview';
-import { Document, Packer, Paragraph, TextRun, HeadingLevel } from 'docx';
-import { saveAs } from 'file-saver';
-import FeedbackModal from './components/FeedbackModal';
-import emailjs from '@emailjs/browser';
-import app from './firebase';
 import Loader from './components/Loader';
 import ThemeToggle from './components/ThemeToggle';
 
 function App() {
-  const [resumeData, setResumeData] = useState({
+  const emptyResumeData = {
     theme: {
       font: 'Arial',
       fontSize: '14px',
@@ -30,36 +25,93 @@ function App() {
       school: '',
       degree: '',
       startDate: '',
-      endDate: ''
+      endDate: '',
+      description: ''
     }],
-    experience: [],
     skills: [],
     professionalExperience: [],
     projects: [],
-    awards: [],
-    certifications: []
-  });
+    certifications: [],
+    awards: []
+  };
 
-  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
+  const sampleResumeData = {
+    theme: {
+      font: 'Arial',
+      fontSize: '14px',
+    },
+    personalInfo: {
+      fullName: 'Abhishek Maurya',
+      email: 'abhishek.maurya@example.com',
+      phone: '+91 9876543210',
+      address: 'Bhopal, Madhya Pradesh',
+      linkedin: 'linkedin.com/in/abhishek-maurya'
+    },
+    summary: 'Dedicated and enthusiastic 3rd-year B.Tech student specializing in Internet of Things (IoT) at LNCT College. Maintaining a strong academic record with 7.5 CGPA. Passionate about emerging technologies and their practical applications in solving real-world problems.',
+    education: [{
+      school: 'Lakshmi Narain College of Technology (LNCT)',
+      degree: 'B.Tech in Internet of Things (IoT)',
+      startDate: '2022',
+      endDate: '2026',
+      description: 'Current CGPA: 7.5'
+    }],
+    skills: [
+      'IoT Development',
+      'Embedded Systems',
+      'C++',
+      'Python',
+      'Arduino',
+      'Raspberry Pi',
+      'Sensor Integration',
+      'Network Protocols',
+      'Data Analytics',
+      'Problem Solving'
+    ],
+    professionalExperience: [{
+      position: 'IoT Project Intern',
+      company: 'Tech Solutions Ltd.',
+      location: 'Bhopal',
+      startDate: '2023-06',
+      endDate: '2023-08',
+      description: 'Worked on developing smart home automation solutions using IoT devices and sensors. Implemented real-time monitoring systems and developed user interfaces for device control.'
+    }],
+    projects: [{
+      title: 'Smart Agriculture Monitoring System',
+      startDate: '2023-01',
+      endDate: '2023-05',
+      description: 'Developed an IoT-based system for monitoring soil moisture, temperature, and humidity in agricultural fields. Implemented automated irrigation control based on sensor data.',
+      technologies: 'Arduino, Sensors, Python, ThingSpeak'
+    },
+    {
+      title: 'Healthcare Monitoring Device',
+      startDate: '2023-09',
+      endDate: '2023-12',
+      description: 'Created a wearable device for monitoring vital signs using IoT technology. Implemented real-time data transmission and alert system for emergency situations.',
+      technologies: 'Raspberry Pi, Health Sensors, MQTT, Node.js'
+    }],
+    certifications: [{
+      name: 'IoT Fundamentals',
+      issuer: 'Cisco Networking Academy',
+      date: '2023'
+    },
+    {
+      name: 'Python for IoT',
+      issuer: 'Coursera',
+      date: '2023'
+    }],
+    awards: [{
+      title: 'Best IoT Project',
+      issuer: 'LNCT College Technical Fest',
+      description: 'Won first prize for Smart Agriculture Monitoring System project'
+    }]
+  };
+
+  const [resumeData, setResumeData] = useState(sampleResumeData);
   const [loading, setLoading] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(true);
-  const [showHindiText, setShowHindiText] = useState(false);
 
   useEffect(() => {
-    emailjs.init("YOUR_PUBLIC_KEY");
-    
-    const timer = setTimeout(() => {
-      setLoading(false);
-      setTimeout(() => {
-        setShowHindiText(true);
-      }, 100);
-    }, 2500);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', 'dark');
+    setTimeout(() => setLoading(false), 2500);
   }, []);
 
   useEffect(() => {
@@ -81,310 +133,9 @@ function App() {
     localStorage.setItem('resumeData', JSON.stringify(newData));
   };
 
-  const generateWordDocument = async () => {
-    const doc = new Document({
-      sections: [{
-        properties: {
-          page: {
-            size: {
-              width: 11906,
-              height: 16838,
-            },
-            margin: {
-              top: 360,
-              right: 360,
-              bottom: 360,
-              left: 360
-            }
-          },
-        },
-        children: [
-          // Personal Info
-          new Paragraph({
-            text: resumeData.personalInfo.fullName,
-            heading: HeadingLevel.HEADING_1,
-            spacing: { after: 200 },
-            style: {
-              font: resumeData.theme.font,
-              size: 32,
-              color: '#2c3e50'
-            }
-          }),
-          new Paragraph({
-            children: [
-              new TextRun({ 
-                text: resumeData.personalInfo.email && `📧 ${resumeData.personalInfo.email}`,
-                size: 20,
-                color: '#666666'
-              }),
-              resumeData.personalInfo.phone && new TextRun({ text: " | ", size: 20 }),
-              new TextRun({ 
-                text: resumeData.personalInfo.phone && `📱 ${resumeData.personalInfo.phone}`,
-                size: 20,
-                color: '#666666'
-              }),
-              resumeData.personalInfo.address && new TextRun({ text: " | ", size: 20 }),
-              new TextRun({ 
-                text: resumeData.personalInfo.address && `📍 ${resumeData.personalInfo.address}`,
-                size: 20,
-                color: '#666666'
-              })
-            ],
-            spacing: { after: 400 },
-            alignment: 'center'
-          }),
-
-          // Education
-          new Paragraph({
-            text: "Education",
-            heading: HeadingLevel.HEADING_2,
-            spacing: { before: 400, after: 200 },
-            style: {
-              font: resumeData.theme.font,
-              size: 28,
-              color: '#34495e',
-              bold: true
-            },
-            border: {
-              bottom: { style: 'single', size: 1, color: '#3498db' }
-            }
-          }),
-          ...resumeData.education.map(edu => [
-            new Paragraph({
-              children: [
-                new TextRun({ 
-                  text: edu.school,
-                  bold: true,
-                  size: 24,
-                  color: '#2c3e50'
-                }),
-                new TextRun({ text: "\t" }), // Tab for alignment
-                new TextRun({ 
-                  text: `${edu.startDate ? new Date(edu.startDate).toLocaleDateString('en-US', { 
-                    month: 'short', 
-                    year: 'numeric' 
-                  }) : ''} - ${edu.endDate ? new Date(edu.endDate).toLocaleDateString('en-US', { 
-                    month: 'short', 
-                    year: 'numeric' 
-                  }) : 'Present'}`,
-                  size: 20,
-                  color: '#7f8c8d'
-                })
-              ],
-              tabStops: [{ type: 'right', position: 11186 }] // Right align date
-            }),
-            new Paragraph({
-              text: edu.degree,
-              spacing: { before: 100, after: 200 },
-              style: {
-                size: 22,
-                color: '#34495e'
-              }
-            })
-          ]).flat(),
-
-          // Skills
-          new Paragraph({
-            text: "Skills",
-            heading: HeadingLevel.HEADING_2,
-            spacing: { before: 400, after: 200 },
-            style: {
-              font: resumeData.theme.font,
-              size: 28,
-              color: '#34495e',
-              bold: true
-            },
-            border: {
-              bottom: { style: 'single', size: 1, color: '#3498db' }
-            }
-          }),
-          new Paragraph({
-            children: resumeData.skills.map((skill, index) => [
-              new TextRun({
-                text: skill,
-                size: 20,
-                color: '#0288d1'
-              }),
-              index < resumeData.skills.length - 1 ? new TextRun({ text: " • ", color: '#666666' }) : null
-            ]).flat().filter(Boolean),
-            spacing: { after: 200 }
-          }),
-
-          // Professional Experience
-          ...(resumeData.professionalExperience.length > 0 ? [
-            new Paragraph({
-              text: "Professional Experience",
-              heading: HeadingLevel.HEADING_2,
-              spacing: { before: 400, after: 200 },
-              style: {
-                font: resumeData.theme.font,
-                size: 28,
-                color: '#34495e',
-                bold: true
-              },
-              border: {
-                bottom: { style: 'single', size: 1, color: '#3498db' }
-              }
-            }),
-            ...resumeData.professionalExperience.map(exp => [
-              new Paragraph({
-                children: [
-                  new TextRun({ 
-                    text: exp.position,
-                    bold: true,
-                    size: 24,
-                    color: '#2c3e50'
-                  }),
-                  new TextRun({ text: "\t" }),
-                  new TextRun({ 
-                    text: `${exp.startDate ? new Date(exp.startDate).toLocaleDateString('en-US', { 
-                      month: 'short', 
-                      year: 'numeric' 
-                    }) : ''} - ${exp.endDate ? new Date(exp.endDate).toLocaleDateString('en-US', { 
-                      month: 'short', 
-                      year: 'numeric' 
-                    }) : 'Present'}`,
-                    size: 20,
-                    color: '#7f8c8d'
-                  })
-                ],
-                tabStops: [{ type: 'right', position: 11186 }]
-              }),
-              new Paragraph({
-                text: exp.company,
-                spacing: { before: 100 },
-                style: {
-                  size: 22,
-                  color: '#34495e',
-                  bold: true
-                }
-              }),
-              exp.location && new Paragraph({
-                text: exp.location,
-                style: {
-                  size: 20,
-                  color: '#7f8c8d'
-                }
-              }),
-              new Paragraph({
-                text: exp.description,
-                spacing: { before: 100, after: 200 },
-                style: {
-                  size: 20,
-                  color: '#666666'
-                }
-              })
-            ]).flat()
-          ] : []),
-
-          // Projects
-          ...(resumeData.projects.length > 0 ? [
-            new Paragraph({
-              text: "Projects",
-              heading: HeadingLevel.HEADING_2,
-              spacing: { before: 400, after: 200 },
-              style: {
-                font: resumeData.theme.font,
-                size: 28,
-                color: '#34495e',
-                bold: true
-              },
-              border: {
-                bottom: { style: 'single', size: 1, color: '#3498db' }
-              }
-            }),
-            ...resumeData.projects.map(project => [
-              new Paragraph({
-                children: [
-                  new TextRun({ 
-                    text: project.title,
-                    bold: true,
-                    size: 24,
-                    color: '#2c3e50'
-                  }),
-                  new TextRun({ text: "\t" }),
-                  new TextRun({ 
-                    text: `${project.startDate ? new Date(project.startDate).toLocaleDateString('en-US', { 
-                      month: 'short', 
-                      year: 'numeric' 
-                    }) : ''} - ${project.endDate ? new Date(project.endDate).toLocaleDateString('en-US', { 
-                      month: 'short', 
-                      year: 'numeric' 
-                    }) : 'Present'}`,
-                    size: 20,
-                    color: '#7f8c8d'
-                  })
-                ],
-                tabStops: [{ type: 'right', position: 11186 }]
-              }),
-              new Paragraph({
-                text: project.description,
-                spacing: { before: 100 },
-                style: {
-                  size: 20,
-                  color: '#666666'
-                }
-              }),
-              project.technologies && new Paragraph({
-                children: project.technologies.split(',').map((tech, index, array) => [
-                  new TextRun({
-                    text: tech.trim(),
-                    size: 20,
-                    color: '#4a5568'
-                  }),
-                  index < array.length - 1 ? new TextRun({ text: " • ", color: '#666666' }) : null
-                ]).flat().filter(Boolean),
-                spacing: { before: 100, after: 200 }
-              })
-            ]).flat()
-          ] : []),
-
-          // Certifications
-          ...(resumeData.certifications.length > 0 ? [
-            new Paragraph({
-              text: "Certifications",
-              heading: HeadingLevel.HEADING_2,
-              spacing: { before: 400 }
-            }),
-            ...resumeData.certifications.map(cert => [
-              new Paragraph({
-                children: [
-                  new TextRun({ text: cert.name, bold: true }),
-                  new TextRun({ text: " - " + cert.issuer })
-                ]
-              })
-            ]).flat()
-          ] : []),
-
-          // Awards
-          ...(resumeData.awards.length > 0 ? [
-            new Paragraph({
-              text: "Awards & Achievements",
-              heading: HeadingLevel.HEADING_2,
-              spacing: { before: 400 }
-            }),
-            ...resumeData.awards.map(award => [
-              new Paragraph({
-                children: [
-                  new TextRun({ text: award.title, bold: true }),
-                  new TextRun({ text: " - " + award.issuer })
-                ]
-              }),
-              new Paragraph({ text: award.description })
-            ]).flat()
-          ] : [])
-        ]
-      }]
-    });
-
-    const blob = await Packer.toBlob(doc);
-    saveAs(blob, `${resumeData.personalInfo.fullName || 'Resume'}.docx`);
-  };
-
-  const handleFeedbackSubmit = (feedback) => {
-    console.log('Feedback:', feedback);
-    setShowFeedbackModal(false);
-    generateWordDocument();
+  const handleClearForm = () => {
+    setResumeData(emptyResumeData);
+    localStorage.removeItem('resumeData');
   };
 
   return (
@@ -412,35 +163,20 @@ function App() {
                       />
                       <span>Follow on LinkedIn</span>
                     </a>
-                    <h1>
-                      Resume Building{" "}
-                      {showHindiText && (
-                        <span className="hindi-text">आसान है</span>
-                      )}
-                    </h1>
+                    <h1>Resume Building <span className="hindi-text">आसान है</span></h1>
                     <ThemeToggle isDark={isDarkMode} onToggle={handleThemeToggle} />
                   </header>
                   <main className="app-main">
-                    <ResumeForm data={resumeData} onUpdate={handleUpdateData} />
+                    <ResumeForm 
+                      data={resumeData} 
+                      onUpdate={handleUpdateData} 
+                      onClear={handleClearForm}
+                    />
                     <ResumePreview data={resumeData} />
                   </main>
-                  <footer className="app-footer">
-                    <button 
-                      className="export-button"
-                      onClick={() => setShowFeedbackModal(true)}
-                    >
-                      Download Resume
-                    </button>
-                  </footer>
                   <div className="copyright-footer">
                     © 2025 Abhishek Maurya. All rights reserved.
                   </div>
-                  {showFeedbackModal && (
-                    <FeedbackModal
-                      onSubmit={handleFeedbackSubmit}
-                      onClose={() => setShowFeedbackModal(false)}
-                    />
-                  )}
                 </div>
               } 
             />

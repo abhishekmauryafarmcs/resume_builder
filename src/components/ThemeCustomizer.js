@@ -1,7 +1,7 @@
 import React from 'react';
 import './ThemeCustomizer.css';
 
-const ThemeCustomizer = ({ theme, onUpdate }) => {
+const ThemeCustomizer = ({ theme, onUpdate, onClear }) => {
   const fonts = [
     'Arial',
     'Times New Roman',
@@ -25,7 +25,12 @@ const ThemeCustomizer = ({ theme, onUpdate }) => {
 
   return (
     <div className="theme-customizer">
-      <h2>Customize Appearance</h2>
+      <div className="customizer-header">
+        <h2>Customize Appearance</h2>
+        <button className="clear-form-button" onClick={onClear}>
+          Clear Form
+        </button>
+      </div>
       <div className="customizer-options">
         <div className="option-group">
           <label htmlFor="font-select">Font Family:</label>

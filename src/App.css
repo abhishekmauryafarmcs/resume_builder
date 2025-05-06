@@ -30,61 +30,37 @@
   line-height: 1.2;
 }
 
-/* Add animation keyframes */
-@keyframes fadeIn {
+/* Hindi text animation */
+@keyframes fadeInHindi {
   0% {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(10px) scale(0.95);
+  }
+  50% {
+    transform: translateY(-5px) scale(1.05);
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
 .hindi-text {
-  color: #3498db;
   font-family: 'Noto Sans Devanagari', sans-serif;
+  color: #3498db;
   display: inline-block;
   font-size: 1.8rem;
   vertical-align: baseline;
   margin-left: 5px;
-  opacity: 0; /* Start hidden */
-  animation: fadeIn 1s ease-out forwards;
-  animation-delay: 1.5s; /* Wait 1.5s before starting animation */
+  font-weight: 700;
+  text-shadow: 1px 1px 2px rgba(52, 152, 219, 0.2);
+  opacity: 0;
+  animation: fadeInHindi 1.5s ease-out forwards;
+  animation-delay: 1s;
+  letter-spacing: 0.02em;
 }
 
-/* Dark mode styles */
-[data-theme="dark"] {
-  background-color: #1a1a1a;
-  color: #ffffff;
-}
-
-[data-theme="dark"] .app {
-  background-color: #1a1a1a;
-}
-
-[data-theme="dark"] .app-header {
-  border-bottom-color: #333;
-}
-
-[data-theme="dark"] .app-header h1 {
-  color: #ffffff;
-}
-
-[data-theme="dark"] .app-footer {
-  border-top-color: #333;
-}
-
-[data-theme="dark"] .linkedin-link {
-  color: #64b5f6;
-}
-
-[data-theme="dark"] .linkedin-link:hover {
-  background-color: rgba(100, 181, 246, 0.1);
-}
-
-/* Preserve existing styles */
+/* Main content */
 .app-main {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -94,51 +70,7 @@
   overflow: hidden;
 }
 
-.app-footer {
-  text-align: center;
-  padding: 30px 0;
-  margin-top: 30px;
-  border-top: 2px solid #eee;
-  flex-shrink: 0;
-}
-
-.export-button {
-  background: #2b579a;
-  color: white;
-  padding: 15px 30px;
-  font-size: 1.2rem;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.export-button:hover {
-  background: #1e3f7a;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.export-button::before {
-  content: "📄";
-  font-size: 1.3rem;
-}
-
-@media (max-width: 768px) {
-  .app-main {
-    grid-template-columns: 1fr;
-  }
-  
-  .export-button {
-    width: 100%;
-    justify-content: center;
-  }
-} 
-
+/* LinkedIn link */
 .linkedin-link {
   position: absolute;
   left: 0;
@@ -169,14 +101,44 @@
   font-size: 14px;
 }
 
+/* Dark mode styles */
+[data-theme="dark"] {
+  background-color: #1a1a1a;
+}
+
+[data-theme="dark"] .app {
+  background-color: #1a1a1a;
+}
+
+[data-theme="dark"] .app-header {
+  border-bottom-color: #333;
+}
+
+[data-theme="dark"] .app-header h1 {
+  color: #ffffff;
+}
+
+[data-theme="dark"] .hindi-text {
+  color: #5dade2;
+  text-shadow: 2px 2px 4px rgba(93, 173, 226, 0.3);
+}
+
+[data-theme="dark"] .linkedin-link {
+  color: #64b5f6;
+}
+
+[data-theme="dark"] .linkedin-link:hover {
+  background-color: rgba(100, 181, 246, 0.1);
+}
+
+/* Responsive styles */
 @media (max-width: 768px) {
   .app-main {
     grid-template-columns: 1fr;
   }
-  
-  .export-button {
-    width: 100%;
-    justify-content: center;
+
+  .hindi-text {
+    font-size: 1.4rem;
   }
 
   .linkedin-link {
@@ -188,111 +150,5 @@
   
   .linkedin-link:hover {
     transform: scale(1.05);
-  }
-} 
-
-[data-theme="dark"] {
-  background-color: #1a1a1a;
-}
-
-[data-theme="dark"] .app {
-  background-color: #1a1a1a;
-}
-
-[data-theme="dark"] .app-header h1 {
-  color: #fff;
-}
-
-[data-theme="dark"] .app-header {
-  border-color: #333;
-}
-
-[data-theme="dark"] .theme-toggle:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-[data-theme="dark"] .app-main {
-  background: none;
-} 
-
-/* Add these styles */
-.section-title {
-  color: #2c3e50;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #eee;
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-/* Dark mode styles for section titles */
-[data-theme="dark"] .section-title {
-  color: #2c3e50 !important; /* Force black color in dark mode */
-  border-bottom-color: #444;
-}
-
-/* Make sure form labels stay visible in dark mode */
-[data-theme="dark"] .resume-form label {
-  color: #2c3e50 !important;
-}
-
-[data-theme="dark"] .form-section {
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
-}
-
-[data-theme="dark"] .resume-form input,
-[data-theme="dark"] .resume-form textarea,
-[data-theme="dark"] .resume-form select {
-  background-color: white;
-  color: #2c3e50;
-  border: 1px solid #ddd;
-}
-
-[data-theme="dark"] .resume-form button {
-  background-color: #2b579a;
-  color: white;
-}
-
-[data-theme="dark"] .resume-form button:hover {
-  background-color: #1e3f7a;
-} 
-
-/* Ensure proper alignment in dark mode */
-[data-theme="dark"] .app-header h1 {
-  color: #ffffff;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .app-header h1 {
-    font-size: 1.8rem;
-  }
-  
-  .hindi-text {
-    font-size: 1.6rem;
-  }
-} 
-
-.copyright-footer {
-  text-align: center;
-  padding: 15px 0;
-  font-size: 0.9rem;
-  color: #666;
-  border-top: 1px solid #eee;
-  margin-top: 20px;
-}
-
-[data-theme="dark"] .copyright-footer {
-  color: #888;
-  border-top-color: #333;
-}
-
-@media (max-width: 768px) {
-  .copyright-footer {
-    padding: 12px 0;
-    font-size: 0.85rem;
   }
 } 

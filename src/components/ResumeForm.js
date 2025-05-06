@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './ResumeForm.css';
 import ThemeCustomizer from './ThemeCustomizer';
 
-const ResumeForm = ({ data, onUpdate }) => {
+const ResumeForm = ({ data, onUpdate, onClear }) => {
   const [spellErrors, setSpellErrors] = useState({});
   const [skillInput, setSkillInput] = useState(data.skills.join(', '));
 
@@ -58,6 +58,7 @@ const ResumeForm = ({ data, onUpdate }) => {
       <ThemeCustomizer 
         theme={data.theme} 
         onUpdate={handleThemeChange}
+        onClear={onClear}
       />
       
       <div className="form-section">
